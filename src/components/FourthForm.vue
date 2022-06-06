@@ -1,44 +1,27 @@
 <template>
   <div class="main--box">
-    <form class="form" @submit.prevent="submitHandler">
-      <input
-        class="input"
-        minlength="2"
-        required
-        type="text"
-        v-model="inputValue"
-      />
-      <select class="select" required v-model="selectValue">
-        <option selected disabled value="">Select Dog or Cat!</option>
-        <option value="Dog">Dog</option>
-        <option value="Cat">Cat</option>
-      </select>
-      <button class="button" type="submit">Add animal</button>
-    </form>
+    <input
+      class="input"
+      minlength="2"
+      required
+      type="text"
+      v-model="inputValue"
+      v-on:input="submitHandler"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { v4 as uuidv4 } from "uuid";
 export default defineComponent({
-  name: "AnimalAdder",
-  emits: ["addAnimal"],
+  name: "forthForm",
+  emits: ["changeTitleFour"],
   data: () => ({
     inputValue: "",
-    selectValue: "",
   }),
   methods: {
     submitHandler() {
-      const newAnimal = {
-        name: this.inputValue,
-        type: this.selectValue,
-        id: uuidv4(),
-      };
-
-      this.$emit("addAnimal", newAnimal);
-      this.selectValue = "";
-      this.inputValue = "";
+      this.$emit("changeTitleFour", this.inputValue);
     },
   },
 });

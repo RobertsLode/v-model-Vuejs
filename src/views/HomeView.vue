@@ -1,97 +1,86 @@
 <template>
   <div class="main--div">
-    <AnimalAdder @addAnimal="addAnimal" />
+    <div class="input--box">
+      <span>{{ inputOne }}</span>
+      <FirstForm @changeTitleOne="changeTitleOne" />
+    </div>
     <br /><br />
-    <AnimalSwitch :toggleView="toggleView" :viewMode="viewMode" />
-    <div>
-      <AnimalList :removeAnimal="removeAnimal" :animalsView="animalsView" />
+    <div class="input--box">
+      <span>{{ inputTwo }}</span>
+      <SecondForm @changeTitleTwo="changeTitleTwo" />
+    </div>
+    <br /><br />
+    <div class="input--box">
+      <ThirdForm @changeTitleThree="changeTitleThree" />
+      <ThirdFormOutput :inputThree="inputThree" />
+    </div>
+    <div class="input--box">
+      <FourthForm @changeTitleFour="changeTitleFour" />
+      <FourthFormOutput :inputFour="inputFour" />
+    </div>
+    <div class="input--box">
+      <FiftFormComponentVue />
+    </div>
+    <div class="input--box">
+      <SixtFormComponentVue />
+    </div>
+    <div class="input--box">
+      <SeventhFormComponentVue />
+    </div>
+    <div class="input--box">
+      <EightFormComponentVue />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import AnimalAdder from "@/components/AnimalAdder.vue";
-import AnimalSwitch from "@/components/AnimalSwitch.vue";
-import AnimalList from "@/components/AnimalList.vue";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/js/bootstrap.js";
-
-type ViewMode = "all" | "dog";
-
-type ListItem = {
-  name: string;
-  type: string;
-  id: number;
-};
+import FirstForm from "@/components/FirstForm.vue";
+import SecondForm from "@/components/SecondForm.vue";
+import ThirdForm from "@/components/ThirdForm.vue";
+import ThirdFormOutput from "@/components/ThirdFormOutput.vue";
+import FourthForm from "@/components/FourthForm.vue";
+import FourthFormOutput from "@/components/FourthFormOutput.vue";
+import FiftFormComponentVue from "@/components/FiftForm/FiftFormComponent.vue";
+import SixtFormComponentVue from "@/components/SixtForm/SixtFormComponent.vue";
+import SeventhFormComponentVue from "@/components/SeventhForm/SeventhFormComponent.vue";
+import EightFormComponentVue from "@/components/EightForm/EightFormComponent.vue";
 
 export default defineComponent({
   name: "HomeView",
   components: {
-    AnimalAdder,
-    AnimalSwitch,
-    AnimalList,
+    FirstForm,
+    SecondForm,
+    ThirdForm,
+    ThirdFormOutput,
+    FourthForm,
+    FourthFormOutput,
+    FiftFormComponentVue,
+    SixtFormComponentVue,
+    SeventhFormComponentVue,
+    EightFormComponentVue,
   },
   data: () => ({
-    viewMode: "all" as ViewMode,
-    animals: [] as ListItem[],
+    inputOne: "",
+    inputTwo: "",
+    inputThree: "",
+    inputFour: "",
   }),
 
-  created() {
-    this.animals = JSON.parse(localStorage.getItem("animals") || "[]");
-  },
-
-  computed: {
-    animalsView() {
-      if (this.viewMode === "dog") {
-        return this.animalsDog;
-      }
-
-      return this.animals;
-    },
-    animalsDog() {
-      return this.animals.filter((animal) => animal.type === "Dog");
-    },
-  },
+  computed: {},
 
   methods: {
-    toggleView() {
-      if (this.viewMode === "all") {
-        this.viewMode = "dog";
-      } else {
-        this.viewMode = "all";
-      }
+    changeTitleOne(title: string) {
+      this.inputOne = title;
     },
-
-    addAnimal(animal: ListItem) {
-      const newAnimals = [...this.animals];
-
-      newAnimals.push(animal);
-
-      this.animals = newAnimals;
+    changeTitleTwo(title: string) {
+      this.inputTwo = title;
     },
-
-    removeAnimal(id: number) {
-      const newAnimals = [...this.animals];
-
-      // newAnimals.splice(
-      //   this.animals.findIndex((animal) => animal.id === id),
-      //   1
-      // );
-
-      // this.animals = newAnimals;
-
-      const a = newAnimals.filter((singleAnimal) => {
-        return singleAnimal.id !== id;
-      });
-
-      this.animals = a;
+    changeTitleThree(title: string) {
+      this.inputThree = title;
     },
-  },
-
-  watch: {
-    animals(newAnimals) {
-      localStorage.setItem("animals", JSON.stringify(newAnimals));
+    changeTitleFour(title: string) {
+      this.inputFour = title;
     },
   },
 });
@@ -102,5 +91,15 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+.input--box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid black;
+  widows: 100%;
 }
 </style>
